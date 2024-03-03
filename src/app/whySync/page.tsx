@@ -2,6 +2,8 @@ import { css } from '@/styled-system/css';
 import { TypographyStylesProvider } from '@mantine/core';
 import Link from 'next/link';
 
+export const runtime = 'edge';
+
 const WhySyncPage = () => (
   <TypographyStylesProvider className={css({ maxW: 'xl', mx: 4 })}>
     <h1>为什么会有离线模式和同步？</h1>
