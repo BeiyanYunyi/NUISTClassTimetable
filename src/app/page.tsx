@@ -6,7 +6,7 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import useSWR from 'swr';
 
-export const runtime = process.env.VERCEL ? 'edge' : 'nodejs';
+export const runtime = 'edge';
 
 dayjs.extend(duration);
 
