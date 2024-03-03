@@ -22,7 +22,12 @@ const Footer = () => (
       </Group>
       <Text ta="center">
         ©2022-2024 北雁云依 以 AGPLv3 协议
-        <Link href="https://github.com/BeiyanYunyi/NUISTClassTimetable">开源</Link>
+        <Link
+          className={css({ textDecoration: 'underline' })}
+          href="https://github.com/BeiyanYunyi/NUISTClassTimetable"
+        >
+          开源
+        </Link>
       </Text>
     </Stack>
   </div>
