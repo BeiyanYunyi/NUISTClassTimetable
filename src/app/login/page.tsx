@@ -2,7 +2,7 @@ import { Center } from '@mantine/core';
 import { FC } from 'react';
 import LoginForm from './LoginForm';
 
-export const runtime = 'edge';
+export const runtime = process.env.VERCEL ? 'edge' : 'nodejs';
 
 const LoginPage: FC = () => {
   return (
