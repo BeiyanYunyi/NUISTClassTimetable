@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "next/core-web-vitals",
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:@eslint-react/recommended-type-checked-legacy",
+    "plugin:prettier/recommended"
+  ],
+  "plugins": ["@typescript-eslint", "react-hooks", "prettier"],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
+  "rules": {
+    // ...
+    "@eslint-react/no-leaked-conditional-rendering": "error" // <-- Requires type information
+  }
+}

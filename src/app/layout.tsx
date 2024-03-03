@@ -1,0 +1,41 @@
+import { ColorSchemeScript, MantineProvider } from '@mantine/core';
+import '@mantine/core/styles.css';
+import type { Metadata } from 'next';
+import AppLayout from './AppLayout';
+import SWRProvider from './SWRProvider';
+import './global.css';
+import theme from './theme';
+
+export const metadata: Metadata = {
+  title: '信带课表',
+  description: '信带课表',
+};
+
+const RootLayout = async ({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) => (
+  <html lang="en">
+    <head>
+      <ColorSchemeScript />
+      <meta
+        name="viewport"
+        content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+      />
+      <link
+        href="https://font.sec.miui.com/font/css?family=MiSans:400,500,700:Chinese_Simplify,Chinese_Traditional,Latin,Numeric&display=swap"
+        rel="stylesheet"
+      />
+    </head>
+    <body>
+      <MantineProvider theme={theme}>
+        <SWRProvider>
+          <AppLayout>{children}</AppLayout>
+        </SWRProvider>
+      </MantineProvider>
+    </body>
+  </html>
+);
+
+export default RootLayout;
