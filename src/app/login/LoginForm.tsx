@@ -1,19 +1,23 @@
 'use client';
-import getCaptcha from '@/actions/getCaptcha';
 import login from '@/actions/login';
+import { BackendResponse } from '@/types/ServerResponse';
 import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
-import useSWRImmutable from 'swr/immutable';
+import { useSWRConfig } from 'swr';
 
-const LoginForm: FC = () => {
+const LoginForm: FC<{
+  captcha:
+    | BackendResponse<{
+        captcha: string;
+        type: string;
+        uuid: string;
+      }>
+    | undefined;
+}> = ({ captcha }) => {
+  const { mutate } = useSWRConfig();
   const form = useForm({ initialValues: { loginname: '', password: '', captcha: '' } });
-  const { data: captcha } = useSWRImmutable('/captcha', () => getCaptcha(), {
-    suspense: true,
-    fallbackData: { code: 200, data: { captcha: '', type: '', uuid: '' }, msg: '操作成功' },
-    revalidateOnMount: true,
-  });
   const router = useRouter();
   if (!captcha) {
     throw new Error('captcha is not ready');
@@ -23,6 +27,7 @@ const LoginForm: FC = () => {
       <form
         onSubmit={form.onSubmit(async (value) => {
           await login({ ...value, uuid: captcha.data.uuid });
+          await mutate('/timeTable');
           router.replace('/');
         })}
       >

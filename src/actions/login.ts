@@ -94,7 +94,11 @@ const login = async (param: LoginParam) => {
       };
     }>
   >();
-  if (res.data.token) cookies().set('token', res.data.token);
+  if (res.data?.token) {
+    cookies().set('token', res.data.token);
+  } else {
+    console.log(res);
+  }
   return res;
 };
 

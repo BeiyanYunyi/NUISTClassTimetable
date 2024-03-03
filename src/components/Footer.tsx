@@ -1,9 +1,9 @@
 import { css } from '@/styled-system/css';
-import { Group, RemoveScroll, Stack, Text } from '@mantine/core';
+import { RemoveScroll, Stack, Text } from '@mantine/core';
 import clsx from 'clsx';
 import Link from 'next/link';
 
-const height = '10rem';
+const height = '4rem';
 
 const Footer = () => (
   <div className={css({})}>
@@ -14,12 +14,6 @@ const Footer = () => (
         RemoveScroll.classNames.fullWidth,
       )}
     >
-      <Group justify="space-evenly">
-        <Stack>
-          <Text>技术支持</Text>
-          <Text>DH 互联网工作室</Text>
-        </Stack>
-      </Group>
       <Text ta="center">
         ©2022-2024 北雁云依 以 AGPLv3 协议
         <Link

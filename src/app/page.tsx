@@ -4,6 +4,7 @@ import getTimeTable from '@/actions/getTimeTable';
 import { Card, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
+import Link from 'next/link';
 import useSWR from 'swr';
 
 export const runtime = 'edge';
@@ -12,20 +13,21 @@ dayjs.extend(duration);
 
 const startDate = dayjs('2024-02-25 00:00:00');
 
+const dayMap = {
+  0: '日',
+  1: '一',
+  2: '二',
+  3: '三',
+  4: '四',
+  5: '五',
+  6: '六',
+};
+
 export default function Home() {
-  const { data: timeTable } = useSWR('/timeTable', () => getTimeTable(), {
-    suspense: true,
-    fallbackData: { code: 200, data: { schoolTermName: '', scheduleList: [] }, msg: '操作成功' },
-  });
+  const { data: timeTable, isLagging } = useSWR('/timeTable', () => getTimeTable());
   const currDat = new Date();
   const currDate = dayjs(currDat);
-  const { data: currWeek } = useSWR(
-    '/passed',
-    () => {
-      return dayjs.duration(currDate.diff(startDate)).weeks();
-    },
-    { suspense: true, fallbackData: 0 },
-  );
+  const currWeek = dayjs.duration(currDate.diff(startDate)).weeks();
 
   const currDay = currDat.getDay();
   // const currDay = 1;
@@ -36,8 +38,20 @@ export default function Home() {
     .sort((a, b) => Number(a.KSJC) - Number(b.KSJC));
   return (
     <div>
+      {isLagging && (
+        <Text>
+          正处于
+          <Text td="underline" component={Link} href="/whySync">
+            离线模式
+          </Text>
+          。可
+          <Text td="underline" component={Link} href="/login">
+            同步
+          </Text>
+        </Text>
+      )}
       <Text>
-        当前：{currWeek + 1} 周 {currDay === 0 ? '日' : currDay}
+        第 {currWeek + 1} 周 星期{dayMap[currDay as 0 | 1 | 2 | 3 | 4 | 5 | 6]}
       </Text>
       {currClass?.map((item) => (
         <Card key={item.teachingClassID} withBorder>
@@ -49,7 +63,12 @@ export default function Home() {
           </Text>
         </Card>
       ))}
-      {!currClass?.length && <Text>今天没有课</Text>}
+      {!!currClass && !currClass.length && (
+        <>
+          <Text>今日无事。</Text>
+          <Text>——路易十六</Text>
+        </>
+      )}
     </div>
   );
 }

@@ -15,11 +15,12 @@ const getTimeTable = async () => {
         headers: {
           Authorization: token.value,
         },
+        cache: 'no-cache',
       })
       .json<BackendResponse<{ schoolTermName: string; scheduleList: ClassData[] }>>();
     return res;
   } catch (e) {
-    redirect('/login');
+    throw new Error(`token expired, ${(e as Error).message}`);
   }
 };
 

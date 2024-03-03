@@ -26,6 +26,9 @@ dependencies:
   dayjs:
     specifier: ^1.11.10
     version: 1.11.10
+  foxact:
+    specifier: ^0.2.31
+    version: 0.2.31(react@18.2.0)
   ky:
     specifier: ^1.2.1
     version: 1.2.1
@@ -2545,6 +2548,19 @@ packages:
       signal-exit: 4.1.0
     dev: true
 
+  /foxact@0.2.31(react@18.2.0):
+    resolution: {integrity: sha512-NxO/aw7e7wFf+xp8JQi8lDrfrKtIDsWwiFHRBajCO+2oLLgupxSqZV++/amOzxC9dmanDHBN3O2YHGv2LJsJrA==}
+    peerDependencies:
+      react: '*'
+    peerDependenciesMeta:
+      react:
+        optional: true
+    dependencies:
+      client-only: 0.0.1
+      react: 18.2.0
+      server-only: 0.0.1
+    dev: false
+
   /fraction.js@4.3.7:
     resolution: {integrity: sha512-ZsDfxO51wGAXREY55a7la9LScWpwv9RxIrYABrlvOFBlH/ShPnrtsXeuUIfXKKOVicNxQ+o8JTbJvjS4M89yew==}
     dev: true
@@ -4034,6 +4050,10 @@ packages:
     dependencies:
       lru-cache: 6.0.0
     dev: true
+
+  /server-only@0.0.1:
+    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
+    dev: false
 
   /set-function-length@1.2.1:
     resolution: {integrity: sha512-j4t6ccc+VsKwYHso+kElc5neZpjtq9EnRICFZtWyBsLojhmeF/ZBd/elqm22WJh/BziDe/SBiOeAt0m2mfLD0g==}

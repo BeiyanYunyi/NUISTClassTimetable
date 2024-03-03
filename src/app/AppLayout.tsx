@@ -13,7 +13,7 @@ const AppLayout: FC<{ children: ReactNode }> = ({ children }) => {
       <AppShell.Header>
         <Group align="center" h="100%" px="sm">
           <Link href="/">
-            <Image src={favicon} alt="Site logo" height={48} width={48} />
+            <Image src={favicon} alt="Site logo" height={48} width={48} suppressHydrationWarning />
           </Link>
           <Text component={Link} href="/" size="xl" ml="xs">
             信带课表
