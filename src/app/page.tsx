@@ -6,6 +6,8 @@ import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import useSWR from 'swr';
 
+export const runtime = 'edge';
+
 dayjs.extend(duration);
 
 const startDate = dayjs('2024-02-25 00:00:00');
