@@ -7,8 +7,8 @@ const manifest = (): MetadataRoute.Manifest => ({
   description: '信带课表',
   start_url: '/',
   display: 'standalone',
-  background_color: '#f7f7f7',
-  theme_color: '#f7f7f7',
+  background_color: '#0c0a09',
+  theme_color: '#0c0a09',
   icons: [{ src: icon.src, sizes: '256x256', type: 'image/svg+xml', purpose: 'any' }],
 });
 

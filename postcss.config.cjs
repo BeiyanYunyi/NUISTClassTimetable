@@ -5,7 +5,7 @@ const config = {
   plugins: {
     tailwindcss: {},
     'postcss-lightningcss': {
-      browsers: '>= .25%',
+      browsers: '>= 99.5%',
       lightningcssOptions: {
         minify: true,
       },
