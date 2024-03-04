@@ -1,7 +1,7 @@
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import AppLayout from './AppLayout';
 import SWRProvider from './SWRProvider';
 import './global.css';
@@ -11,8 +11,9 @@ import theme from './theme';
 export const metadata: Metadata = {
   title: manifest().name,
   description: manifest().description,
-  themeColor: manifest().theme_color,
 };
+
+export const viewport: Viewport = { themeColor: manifest().theme_color };
 
 const RootLayout = async ({
   children,

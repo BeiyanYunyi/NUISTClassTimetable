@@ -9,6 +9,7 @@ import { useLocalStorage } from 'foxact/use-local-storage';
 import Link from 'next/link';
 import useSWR from 'swr';
 import Column from './Column';
+import { CurrWeekProvider } from './currentDate';
 
 export const runtime = 'edge';
 
@@ -38,9 +39,11 @@ export default function Home() {
             flexShrink: 0,
           })}
         >
-          {Array.from({ length: columns || 1 }, (_, i) => (
-            <Column key={i} index={i} />
-          ))}
+          <CurrWeekProvider>
+            {Array.from({ length: columns || 1 }, (_, i) => (
+              <Column key={i} index={i} />
+            ))}
+          </CurrWeekProvider>
         </Group>
         {(columns || 1) > 1 && (
           <ActionIcon

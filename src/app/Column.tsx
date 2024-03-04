@@ -7,7 +7,7 @@ import { ActionIcon, Card, Group, NativeSelect, Stack, Text } from '@mantine/cor
 import { useLocalStorage } from 'foxact/use-local-storage';
 import { FC } from 'react';
 import useSWR from 'swr';
-import { oriCurrDay, oriCurrWeek } from './currentDate';
+import { oriCurrDay, oriCurrWeek, useCurrWeek, useSetCurrWeek } from './currentDate';
 
 export const runtime = 'edge';
 
@@ -23,12 +23,13 @@ const dayMap = {
 
 const Column: FC<{ index: number }> = ({ index }) => {
   const { data: timeTable } = useSWR('/timeTable', () => getTimeTable());
-  const [currWeek, setCurrWeek] = useLocalStorage('week', oriCurrWeek);
+  const currWeek = useCurrWeek();
+  const setCurrWeek = useSetCurrWeek();
   const [currDay, setCurrDay] = useLocalStorage(`column-${index}-day`, oriCurrDay);
 
   const currClass = timeTable?.data.scheduleList
     .filter((item) => Number(item.SKXQ) === currDay)
-    .filter((item) => item.SKZC[currWeek || 0] === '1')
+    .filter((item) => item.SKZC[currWeek] === '1')
     .sort((a, b) => Number(a.KSJC) - Number(b.KSJC));
   return (
     <Stack className={css({ flexShrink: 0 })}>
@@ -38,7 +39,7 @@ const Column: FC<{ index: number }> = ({ index }) => {
             label: `第 ${i + 1} 周`,
             value: i.toString(),
           }))}
-          value={(currWeek || 0).toString()}
+          value={currWeek.toString()}
           onChange={(e) => {
             setCurrWeek(Number(e.currentTarget.value));
           }}
