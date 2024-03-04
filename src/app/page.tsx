@@ -16,7 +16,7 @@ export default function Home() {
   const [columns, setColumns] = useLocalStorage('columns', 1);
   const { isLagging } = useSWR('/timeTable', () => getTimeTable());
   return (
-    <Stack mx="md">
+    <Stack px="md" maw="100vw">
       {isLagging && (
         <Text>
           正处于
@@ -29,8 +29,15 @@ export default function Home() {
           </Text>
         </Text>
       )}
-      <Group wrap="nowrap">
-        <Group align="start" wrap="nowrap" className={css({ overflowX: 'scroll' })}>
+      <Group wrap="nowrap" className={css({ overflowX: 'scroll' })}>
+        <Group
+          align="start"
+          wrap="nowrap"
+          className={css({
+            w: 'max-content',
+            flexShrink: 0,
+          })}
+        >
           {Array.from({ length: columns || 1 }, (_, i) => (
             <Column key={i} index={i} />
           ))}
