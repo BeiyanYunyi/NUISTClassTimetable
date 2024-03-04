@@ -39,6 +39,7 @@ export default function Home() {
         </div>
         {(columns || 1) > 1 && (
           <Button
+            className="flex-shrink-0"
             variant="outline"
             size="icon"
             onClick={() => {
@@ -49,7 +50,12 @@ export default function Home() {
             <MdiMinus />
           </Button>
         )}
-        <Button variant="outline" size="icon" onClick={() => setColumns((col) => (col || 1) + 1)}>
+        <Button
+          className="flex-shrink-0"
+          variant="outline"
+          size="icon"
+          onClick={() => setColumns((col) => (col || 1) + 1)}
+        >
           <MdiPlus />
         </Button>
       </div>
