@@ -1,7 +1,7 @@
 import Link from 'next/link';
 
 const AboutPage = () => (
-  <div className="mx-auto prose">
+  <div className="mx-auto px-4 prose">
     <p>
       <Link href="/">返回</Link>
     </p>
