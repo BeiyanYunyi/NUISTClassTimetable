@@ -1,10 +1,12 @@
 'use client';
 
 import getTimeTable from '@/actions/getTimeTable';
-import { Card, Text } from '@mantine/core';
+import { MdiCalendarRefresh } from '@/components/MdiCalendarRefresh';
+import { ActionIcon, Card, Group, NativeSelect, Stack, Text } from '@mantine/core';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 import Link from 'next/link';
+import { useState } from 'react';
 import useSWR from 'swr';
 
 export const runtime = 'edge';
@@ -27,17 +29,17 @@ export default function Home() {
   const { data: timeTable, isLagging } = useSWR('/timeTable', () => getTimeTable());
   const currDat = new Date();
   const currDate = dayjs(currDat);
-  const currWeek = dayjs.duration(currDate.diff(startDate)).weeks();
-
-  const currDay = currDat.getDay();
-  // const currDay = 1;
+  const oriCurrWeek = dayjs.duration(currDate.diff(startDate)).weeks();
+  const [currWeek, setCurrWeek] = useState(oriCurrWeek);
+  const oriCurrDay = currDat.getDay();
+  const [currDay, setCurrDay] = useState(oriCurrDay);
 
   const currClass = timeTable?.data.scheduleList
     .filter((item) => Number(item.SKXQ) === currDay)
     .filter((item) => item.SKZC[currWeek] === '1')
     .sort((a, b) => Number(a.KSJC) - Number(b.KSJC));
   return (
-    <div>
+    <Stack>
       {isLagging && (
         <Text>
           正处于
@@ -50,9 +52,41 @@ export default function Home() {
           </Text>
         </Text>
       )}
-      <Text>
-        第 {currWeek + 1} 周 星期{dayMap[currDay as 0 | 1 | 2 | 3 | 4 | 5 | 6]}
-      </Text>
+      <Group>
+        <NativeSelect
+          data={Array.from({ length: 20 }, (_, i) => ({
+            label: `第 ${i + 1} 周`,
+            value: i.toString(),
+          }))}
+          value={currWeek.toString()}
+          onChange={(e) => {
+            setCurrWeek(Number(e.currentTarget.value));
+          }}
+        />
+        <NativeSelect
+          data={Array.from({ length: 7 }, (_, i) => ({
+            label: `星期${dayMap[i as 0 | 1 | 2 | 3 | 4 | 5 | 6]}`,
+            value: i.toString(),
+          }))}
+          value={currDay.toString()}
+          onChange={(e) => {
+            setCurrDay(Number(e.currentTarget.value));
+          }}
+        />
+        {(currWeek !== oriCurrWeek || currDay !== oriCurrDay) && (
+          <ActionIcon
+            size="lg"
+            radius="xl"
+            variant="light"
+            onClick={() => {
+              setCurrWeek(dayjs.duration(currDate.diff(startDate)).weeks());
+              setCurrDay(currDat.getDay());
+            }}
+          >
+            <MdiCalendarRefresh />
+          </ActionIcon>
+        )}
+      </Group>
       {currClass?.map((item) => (
         <Card key={item.teachingClassID} withBorder>
           <Text size="lg">{item.KCM}</Text>
@@ -64,11 +98,13 @@ export default function Home() {
         </Card>
       ))}
       {!!currClass && !currClass.length && (
-        <>
-          <Text>今日无事。</Text>
-          <Text>——路易十六</Text>
-        </>
+        <Card withBorder c="dimmed">
+          <Text size="lg">今日无事。</Text>
+          <Text>路易十六</Text>
+          <Text>凡尔赛宫</Text>
+          <Text>1789 年 5 月 5 日</Text>
+        </Card>
       )}
-    </div>
+    </Stack>
   );
 }
