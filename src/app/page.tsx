@@ -3,6 +3,7 @@
 import getTimeTable from '@/actions/getTimeTable';
 import { MdiMinus } from '@/components/MdiMinus';
 import { MdiPlus } from '@/components/MdiPlus';
+import { css } from '@/styled-system/css';
 import { ActionIcon, Group, Stack, Text } from '@mantine/core';
 import { useLocalStorage } from 'foxact/use-local-storage';
 import Link from 'next/link';
@@ -15,7 +16,7 @@ export default function Home() {
   const [columns, setColumns] = useLocalStorage('columns', 1);
   const { isLagging } = useSWR('/timeTable', () => getTimeTable());
   return (
-    <Stack>
+    <Stack mx="md">
       {isLagging && (
         <Text>
           正处于
@@ -28,8 +29,8 @@ export default function Home() {
           </Text>
         </Text>
       )}
-      <Group>
-        <Group align="start">
+      <Group wrap="nowrap">
+        <Group align="start" wrap="nowrap" className={css({ overflowX: 'scroll' })}>
           {Array.from({ length: columns || 1 }, (_, i) => (
             <Column key={i} index={i} />
           ))}

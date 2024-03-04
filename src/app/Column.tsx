@@ -2,6 +2,7 @@
 
 import getTimeTable from '@/actions/getTimeTable';
 import { MdiCalendarRefresh } from '@/components/MdiCalendarRefresh';
+import { css } from '@/styled-system/css';
 import { ActionIcon, Card, Group, NativeSelect, Stack, Text } from '@mantine/core';
 import { useLocalStorage } from 'foxact/use-local-storage';
 import { FC } from 'react';
@@ -30,7 +31,7 @@ const Column: FC<{ index: number }> = ({ index }) => {
     .filter((item) => item.SKZC[currWeek || 0] === '1')
     .sort((a, b) => Number(a.KSJC) - Number(b.KSJC));
   return (
-    <Stack>
+    <Stack className={css({ flexShrink: 0 })}>
       <Group>
         <NativeSelect
           data={Array.from({ length: 20 }, (_, i) => ({
