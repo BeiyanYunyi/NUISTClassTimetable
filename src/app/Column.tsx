@@ -23,7 +23,7 @@ const dayMap = {
 
 const Column: FC<{ index: number }> = ({ index }) => {
   const { data: timeTable } = useSWR('/timeTable', () => getTimeTable());
-  const [currWeek, setCurrWeek] = useLocalStorage(`column-${index}-week`, oriCurrWeek);
+  const [currWeek, setCurrWeek] = useLocalStorage('week', oriCurrWeek);
   const [currDay, setCurrDay] = useLocalStorage(`column-${index}-day`, oriCurrDay);
 
   const currClass = timeTable?.data.scheduleList

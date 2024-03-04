@@ -48,7 +48,6 @@ export default function Home() {
             radius="lg"
             onClick={() => {
               setColumns((col) => col! - 1);
-              localStorage.removeItem(`column-${columns! - 1}-week`);
               localStorage.removeItem(`column-${columns! - 1}-day`);
             }}
           >
