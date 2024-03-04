@@ -1,7 +1,7 @@
 'use client';
 import { FC, ReactNode } from 'react';
 import { Middleware, SWRConfig, unstable_serialize } from 'swr';
-
+import { Notifications } from '@mantine/notifications';
 import { useLocalStorage } from 'foxact/use-local-storage';
 import { useCallback, useEffect } from 'react';
 
@@ -45,7 +45,12 @@ const laggy: Middleware = (useSWRNext) => {
 };
 
 const SWRProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  return <SWRConfig value={{ use: [laggy] }}>{children}</SWRConfig>;
+  return (
+    <SWRConfig value={{ use: [laggy] }}>
+      <Notifications />
+      {children}
+    </SWRConfig>
+  );
 };
 
 export default SWRProvider;

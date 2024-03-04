@@ -1,5 +1,6 @@
 import { ColorSchemeScript, MantineProvider } from '@mantine/core';
 import '@mantine/core/styles.css';
+import '@mantine/notifications/styles.css';
 import type { Metadata } from 'next';
 import AppLayout from './AppLayout';
 import SWRProvider from './SWRProvider';

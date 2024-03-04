@@ -3,6 +3,7 @@ import login from '@/actions/login';
 import { BackendResponse } from '@/types/ServerResponse';
 import { Button, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
+import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
 import { useSWRConfig } from 'swr';
@@ -26,7 +27,17 @@ const LoginForm: FC<{
     <div>
       <form
         onSubmit={form.onSubmit(async (value) => {
-          await login({ ...value, uuid: captcha.data.uuid });
+          const res = await login({ ...value, uuid: captcha.data.uuid });
+          if (res.code !== 200) {
+            notifications.show({
+              title: '登录失败',
+              message: res.msg,
+              color: 'red',
+              withCloseButton: true,
+              radius: 'lg',
+            });
+            return router.refresh();
+          }
           await mutate('/timeTable');
           router.replace('/');
         })}
