@@ -1,12 +1,8 @@
-import { ColorSchemeScript, MantineProvider } from '@mantine/core';
-import '@mantine/core/styles.css';
-import '@mantine/notifications/styles.css';
 import type { Metadata, Viewport } from 'next';
 import AppLayout from './AppLayout';
 import SWRProvider from './SWRProvider';
 import './global.css';
 import manifest from './manifest';
-import theme from './theme';
 
 export const metadata: Metadata = {
   title: manifest().name,
@@ -22,7 +18,6 @@ const RootLayout = async ({
 }>) => (
   <html lang="en">
     <head>
-      <ColorSchemeScript />
       <meta
         name="viewport"
         content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
@@ -33,11 +28,9 @@ const RootLayout = async ({
       />
     </head>
     <body>
-      <MantineProvider theme={theme}>
-        <SWRProvider>
-          <AppLayout>{children}</AppLayout>
-        </SWRProvider>
-      </MantineProvider>
+      <SWRProvider>
+        <AppLayout>{children}</AppLayout>
+      </SWRProvider>
     </body>
   </html>
 );

@@ -1,7 +1,4 @@
-'use client';
 import Footer from '@/components/Footer';
-import { css } from '@/styled-system/css';
-import { AppShell, Group, Text } from '@mantine/core';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC, ReactNode } from 'react';
@@ -9,34 +6,22 @@ import favicon from './icon.svg';
 
 const AppLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
-    <AppShell header={{ height: 60 }} footer={{ height: 128, offset: true, collapsed: true }}>
-      <AppShell.Header>
-        <Group align="center" h="100%" px="sm">
+    <>
+      <header className="h-[3.75rem] sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <div className="flex items-center h-full px-4">
           <Link href="/">
             <Image src={favicon} alt="Site logo" height={48} width={48} suppressHydrationWarning />
           </Link>
-          <Text component={Link} href="/" size="xl" ml="xs">
+          <Link href="/" className="ml-2 text-xl">
             信带课表
-          </Text>
-        </Group>
-      </AppShell.Header>
-      <AppShell.Main
-        display="flex"
-        className={css({
-          alignItems: 'center',
-          justifyContent: 'center',
-          position: 'relative',
-          zIndex: 1,
-          minH: 'calc(100vh - 25rem)',
-          pb: '5rem',
-          bg: 'white',
-          boxShadow: 'var(--mantine-shadow-md)',
-        })}
-      >
+          </Link>
+        </div>
+      </header>
+      <main className="flex items-center justify-center relative z-10 pb-20 bg-white shadow-md pt-[3.75rem] min-h-[100vh]">
         {children}
-      </AppShell.Main>
+      </main>
       <Footer />
-    </AppShell>
+    </>
   );
 };
 

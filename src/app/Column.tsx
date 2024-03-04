@@ -2,11 +2,18 @@
 
 import getTimeTable from '@/actions/getTimeTable';
 import { MdiCalendarRefresh } from '@/components/MdiCalendarRefresh';
-import { css } from '@/styled-system/css';
-import { ActionIcon, Card, Group, NativeSelect, Stack, Text } from '@mantine/core';
+import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { useLocalStorage } from 'foxact/use-local-storage';
 import { FC } from 'react';
 import useSWR from 'swr';
+import Class from './Class';
 import { oriCurrDay, oriCurrWeek, useCurrWeek, useSetCurrWeek } from './currentDate';
 
 export const runtime = 'edge';
@@ -32,72 +39,84 @@ const Column: FC<{ index: number }> = ({ index }) => {
     .filter((item) => item.SKZC[currWeek] === '1')
     .sort((a, b) => Number(a.KSJC) - Number(b.KSJC));
   return (
-    <Stack className={css({ flexShrink: 0 })}>
-      <Group>
-        <NativeSelect
-          data={Array.from({ length: 20 }, (_, i) => ({
-            label: `第 ${i + 1} 周`,
-            value: i.toString(),
-          }))}
+    <div className="shrink-0 flex flex-col gap-2">
+      <div className="flex gap-2">
+        <Select
           value={currWeek.toString()}
-          onChange={(e) => {
-            setCurrWeek(Number(e.currentTarget.value));
+          onValueChange={(e) => {
+            setCurrWeek(Number(e));
           }}
-        />
+        >
+          <SelectTrigger className="w-auto">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 20 }, (_, i) => (
+              <SelectItem key={i} value={i.toString()}>
+                第 {i + 1} 周
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         {currWeek !== oriCurrWeek && (
-          <ActionIcon
-            size="lg"
-            radius="xl"
-            variant="light"
+          <Button
+            size="icon"
+            variant="secondary"
             onClick={() => {
               setCurrWeek(oriCurrWeek);
             }}
           >
             <MdiCalendarRefresh />
-          </ActionIcon>
+          </Button>
         )}
-        <NativeSelect
-          data={Array.from({ length: 7 }, (_, i) => ({
-            label: `星期${dayMap[i as 0 | 1 | 2 | 3 | 4 | 5 | 6]}`,
-            value: i.toString(),
-          }))}
+        <Select
           value={(currDay || 0).toString()}
-          onChange={(e) => {
-            setCurrDay(Number(e.currentTarget.value));
+          onValueChange={(e) => {
+            setCurrDay(Number(e));
           }}
-        />
+        >
+          <SelectTrigger className="w-auto">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {Array.from({ length: 7 }, (_, i) => (
+              <SelectItem key={i} value={i.toString()}>
+                星期{dayMap[i as 0 | 1 | 2 | 3 | 4 | 5 | 6]}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
         {currDay !== oriCurrDay && (
-          <ActionIcon
-            size="lg"
-            radius="xl"
-            variant="light"
+          <Button
+            size="icon"
+            variant="secondary"
             onClick={() => {
               setCurrDay(oriCurrDay);
             }}
           >
             <MdiCalendarRefresh />
-          </ActionIcon>
+          </Button>
         )}
-      </Group>
+      </div>
       {currClass?.map((item) => (
-        <Card key={item.teachingClassID} withBorder>
-          <Text size="lg">{item.KCM}</Text>
-          <Text>{item.SKJS}</Text>
-          <Text>{item.YPSJDD}</Text>
-          <Text>
-            {item.KSJC} - {item.JSJC} 节
-          </Text>
-        </Card>
+        <Class
+          key={item.teachingClassID}
+          name={item.KCM}
+          classroom={item.YPSJDD}
+          teacher={item.SKJS}
+          time={`${item.KSJC} - ${item.JSJC} 节`}
+        />
       ))}
       {!!currClass && !currClass.length && (
-        <Card withBorder c="dimmed">
-          <Text size="lg">今日无事。</Text>
-          <Text>路易十六</Text>
-          <Text>凡尔赛宫</Text>
-          <Text>1789 年 5 月 5 日</Text>
-        </Card>
+        <Class
+          disabled
+          name="今日无事"
+          classroom="凡尔赛宫"
+          teacher="路易十六"
+          time="1789 年 5 月 5 日"
+        />
       )}
-    </Stack>
+    </div>
   );
 };
 

@@ -1,9 +1,7 @@
-import { css } from '@/styled-system/css';
-import { TypographyStylesProvider } from '@mantine/core';
 import Link from 'next/link';
 
 const AboutPage = () => (
-  <TypographyStylesProvider className={css({ maxW: 'xl', mx: 4 })}>
+  <div className="mx-auto prose">
     <p>
       <Link href="/">返回</Link>
     </p>
@@ -60,7 +58,7 @@ const AboutPage = () => (
     <p>
       <Link href="/">返回</Link>
     </p>
-  </TypographyStylesProvider>
+  </div>
 );
 
 export default AboutPage;

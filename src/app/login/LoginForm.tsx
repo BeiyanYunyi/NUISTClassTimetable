@@ -1,11 +1,13 @@
 'use client';
 import login from '@/actions/login';
+import { Button } from '@/components/ui/button';
+import { Form, FormControl, FormField, FormItem, FormLabel } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { BackendResponse } from '@/types/ServerResponse';
-import { Button, TextInput } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { notifications } from '@mantine/notifications';
 import { useRouter } from 'next/navigation';
 import { FC } from 'react';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { useSWRConfig } from 'swr';
 
 const LoginForm: FC<{
@@ -18,23 +20,21 @@ const LoginForm: FC<{
     | undefined;
 }> = ({ captcha }) => {
   const { mutate } = useSWRConfig();
-  const form = useForm({ initialValues: { loginname: '', password: '', captcha: '' } });
+  const form = useForm({
+    defaultValues: { loginname: '', password: '', captcha: '' },
+  });
   const router = useRouter();
   if (!captcha) {
     throw new Error('captcha is not ready');
   }
   return (
-    <div>
+    <Form {...form}>
       <form
-        onSubmit={form.onSubmit(async (value) => {
+        onSubmit={form.handleSubmit(async (value) => {
           const res = await login({ ...value, uuid: captcha.data.uuid });
           if (res.code !== 200) {
-            notifications.show({
-              title: '登录失败',
-              message: res.msg,
-              color: 'red',
-              withCloseButton: true,
-              radius: 'lg',
+            toast.error('登录失败', {
+              description: res.msg,
             });
             return router.refresh();
           }
@@ -42,15 +42,48 @@ const LoginForm: FC<{
           router.replace('/');
         })}
       >
-        <TextInput withAsterisk label="学号" {...form.getInputProps('loginname')} />
-        <TextInput type="password" withAsterisk label="密码" {...form.getInputProps('password')} />
-        <TextInput withAsterisk label="验证码" {...form.getInputProps('captcha')} />
+        <FormField
+          name="loginname"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>学号</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="password"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>密码</FormLabel>
+              <FormControl>
+                <Input {...field} type="password" />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        <FormField
+          name="captcha"
+          control={form.control}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>验证码</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
         {captcha.data.captcha && <img src={captcha.data.captcha} alt="captcha" />}
-        <Button fullWidth type="submit">
+        <Button className="w-full" type="submit">
           登录
         </Button>
       </form>
-    </div>
+    </Form>
   );
 };
 

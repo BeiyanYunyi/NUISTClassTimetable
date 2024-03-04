@@ -1,9 +1,8 @@
 'use client';
-import { FC, ReactNode } from 'react';
-import { Middleware, SWRConfig, unstable_serialize } from 'swr';
-import { Notifications } from '@mantine/notifications';
+import { Toaster } from '@/components/ui/sonner';
 import { useLocalStorage } from 'foxact/use-local-storage';
-import { useCallback, useEffect } from 'react';
+import { FC, ReactNode, useCallback, useEffect } from 'react';
+import { Middleware, SWRConfig, unstable_serialize } from 'swr';
 
 // 这是一个 SWR 中间件，用于在 key 发生变化时保留数据。
 const laggy: Middleware = (useSWRNext) => {
@@ -47,7 +46,7 @@ const laggy: Middleware = (useSWRNext) => {
 const SWRProvider: FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <SWRConfig value={{ use: [laggy] }}>
-      <Notifications />
+      <Toaster richColors closeButton />
       {children}
     </SWRConfig>
   );

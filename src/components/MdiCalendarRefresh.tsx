@@ -1,10 +1,9 @@
-import { css } from '@/styled-system/css';
 import { SVGProps } from 'react';
 
 export function MdiCalendarRefresh(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
-      className={css({ fontSize: 'lg' })}
+      className="text-lg"
       xmlns="http://www.w3.org/2000/svg"
       width="1em"
       height="1em"

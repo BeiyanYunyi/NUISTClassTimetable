@@ -3,8 +3,7 @@
 import getTimeTable from '@/actions/getTimeTable';
 import { MdiMinus } from '@/components/MdiMinus';
 import { MdiPlus } from '@/components/MdiPlus';
-import { css } from '@/styled-system/css';
-import { ActionIcon, Group, Stack, Text } from '@mantine/core';
+import { Button } from '@/components/ui/button';
 import { useLocalStorage } from 'foxact/use-local-storage';
 import Link from 'next/link';
 import useSWR from 'swr';
@@ -17,50 +16,43 @@ export default function Home() {
   const [columns, setColumns] = useLocalStorage('columns', 1);
   const { isLagging } = useSWR('/timeTable', () => getTimeTable());
   return (
-    <Stack px="md" maw="100vw">
+    <div className="flex flex-col px-4 max-w-[100vw]">
       {isLagging && (
-        <Text>
+        <p className="mb-2">
           正处于
-          <Text td="underline" component={Link} href="/about#whySync">
+          <Link className="underline" href="/about#whySync">
             离线模式
-          </Text>
+          </Link>
           。可
-          <Text td="underline" component={Link} href="/login">
+          <Link className="underline" href="/login">
             同步
-          </Text>
-        </Text>
+          </Link>
+        </p>
       )}
-      <Group wrap="nowrap" className={css({ overflowX: 'scroll' })}>
-        <Group
-          align="start"
-          wrap="nowrap"
-          className={css({
-            w: 'max-content',
-            flexShrink: 0,
-          })}
-        >
+      <div className="flex items-center gap-2 flex-nowrap overflow-x-scroll">
+        <div className="flex gap-2 items-start flex-nowrap w-[max-content] flex-shrink-0">
           <CurrWeekProvider>
             {Array.from({ length: columns || 1 }, (_, i) => (
               <Column key={i} index={i} />
             ))}
           </CurrWeekProvider>
-        </Group>
+        </div>
         {(columns || 1) > 1 && (
-          <ActionIcon
-            variant="light"
-            radius="lg"
+          <Button
+            variant="outline"
+            size="icon"
             onClick={() => {
               setColumns((col) => col! - 1);
               localStorage.removeItem(`column-${columns! - 1}-day`);
             }}
           >
             <MdiMinus />
-          </ActionIcon>
+          </Button>
         )}
-        <ActionIcon variant="light" radius="lg" onClick={() => setColumns((col) => (col || 1) + 1)}>
+        <Button variant="outline" size="icon" onClick={() => setColumns((col) => (col || 1) + 1)}>
           <MdiPlus />
-        </ActionIcon>
-      </Group>
-    </Stack>
+        </Button>
+      </div>
+    </div>
   );
 }
