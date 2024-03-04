@@ -1,6 +1,7 @@
+import AppLayout from '@/components/AppLayout';
+import SWRProvider from '@/components/SWRProvider';
+import { ThemeProvider } from '@/components/ThemeProvider';
 import type { Metadata, Viewport } from 'next';
-import AppLayout from './AppLayout';
-import SWRProvider from './SWRProvider';
 import './global.css';
 import manifest from './manifest';
 
@@ -28,9 +29,11 @@ const RootLayout = async ({
       />
     </head>
     <body>
-      <SWRProvider>
-        <AppLayout>{children}</AppLayout>
-      </SWRProvider>
+      <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+        <SWRProvider>
+          <AppLayout>{children}</AppLayout>
+        </SWRProvider>
+      </ThemeProvider>
     </body>
   </html>
 );

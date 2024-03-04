@@ -1,8 +1,9 @@
+import favicon from '@/app/icon.svg';
 import Footer from '@/components/Footer';
+import { ModeToggle } from '@/components/ModeToggle';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FC, ReactNode } from 'react';
-import favicon from './icon.svg';
 
 const AppLayout: FC<{ children: ReactNode }> = ({ children }) => {
   return (
@@ -15,9 +16,11 @@ const AppLayout: FC<{ children: ReactNode }> = ({ children }) => {
           <Link href="/" className="ml-2 text-xl">
             信带课表
           </Link>
+          <div className="flex-grow" />
+          <ModeToggle />
         </div>
       </header>
-      <main className="flex items-center justify-center relative z-10 pb-20 bg-white shadow-md pt-[3.75rem] min-h-[100vh]">
+      <main className="flex items-center justify-center relative z-10 pb-20 bg-background shadow-md pt-[3.75rem] min-h-[100vh]">
         {children}
       </main>
       <Footer />
