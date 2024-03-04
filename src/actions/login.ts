@@ -95,7 +95,13 @@ const login = async (param: LoginParam) => {
     }>
   >();
   if (res.data?.token) {
-    cookies().set('token', res.data.token);
+    cookies().set('token', res.data.token, {
+      path: '/',
+      maxAge: 60 * 60 * 24 * 7,
+      sameSite: 'strict',
+      secure: true,
+      httpOnly: true,
+    });
   } else {
     console.log(res);
   }

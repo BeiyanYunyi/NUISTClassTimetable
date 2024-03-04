@@ -35,7 +35,9 @@ const LoginForm: FC<{
         <TextInput type="password" withAsterisk label="密码" {...form.getInputProps('password')} />
         <TextInput withAsterisk label="验证码" {...form.getInputProps('captcha')} />
         {captcha.data.captcha && <img src={captcha.data.captcha} alt="captcha" />}
-        <Button type="submit">登录</Button>
+        <Button fullWidth type="submit">
+          登录
+        </Button>
       </form>
     </div>
   );

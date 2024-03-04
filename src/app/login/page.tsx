@@ -1,5 +1,5 @@
 import getCaptcha from '@/actions/getCaptcha';
-import { Center } from '@mantine/core';
+import { Stack, Text } from '@mantine/core';
 import { FC } from 'react';
 import LoginForm from './LoginForm';
 
@@ -9,9 +9,10 @@ export const dynamic = 'force-dynamic';
 const LoginPage: FC = async () => {
   const captcha = await getCaptcha();
   return (
-    <Center h="calc(100vh - 64px)">
+    <Stack>
+      <Text>登录凭据与学校教务系统一致</Text>
       <LoginForm captcha={captcha} />
-    </Center>
+    </Stack>
   );
 };
 
