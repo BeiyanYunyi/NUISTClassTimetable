@@ -5,11 +5,13 @@ import type { Metadata } from 'next';
 import AppLayout from './AppLayout';
 import SWRProvider from './SWRProvider';
 import './global.css';
+import manifest from './manifest';
 import theme from './theme';
 
 export const metadata: Metadata = {
-  title: '信带课表',
-  description: '信带课表',
+  title: manifest().name,
+  description: manifest().description,
+  themeColor: manifest().theme_color,
 };
 
 const RootLayout = async ({
