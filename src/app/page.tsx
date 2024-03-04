@@ -20,7 +20,7 @@ export default function Home() {
       {isLagging && (
         <Text>
           正处于
-          <Text td="underline" component={Link} href="/whySync">
+          <Text td="underline" component={Link} href="/about#whySync">
             离线模式
           </Text>
           。可

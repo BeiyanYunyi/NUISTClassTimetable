@@ -21,6 +21,9 @@ const Footer = () => (
           href="https://github.com/BeiyanYunyi/NUISTClassTimetable"
         >
           开源
+        </Link>{' '}
+        <Link className={css({ textDecoration: 'underline' })} href="/about">
+          关于本站
         </Link>
       </Text>
     </Stack>
