@@ -21,8 +21,9 @@ const RootLayout = async ({
     <head>
       <meta
         name="viewport"
-        content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
+        content="minimum-scale=1, initial-scale=1, width=device-width, viewport-fit=cover"
       />
+      <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       <link
         href="https://font.sec.miui.com/font/css?family=MiSans:400,500,700:Chinese_Simplify,Chinese_Traditional,Latin,Numeric&display=swap"
         rel="stylesheet"

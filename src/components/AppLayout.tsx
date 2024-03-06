@@ -1,7 +1,6 @@
-import favicon from '@/app/icon.svg';
+import Favicon from '@/app/icon.svg';
 import Footer from '@/components/Footer';
 import { ModeToggle } from '@/components/ModeToggle';
-import Image from 'next/image';
 import Link from 'next/link';
 import { FC, ReactNode } from 'react';
 
@@ -11,7 +10,7 @@ const AppLayout: FC<{ children: ReactNode }> = ({ children }) => {
       <header className="h-[3.75rem] sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="flex items-center h-full px-4">
           <Link href="/">
-            <Image src={favicon} alt="Site logo" height={48} width={48} suppressHydrationWarning />
+            <Favicon className="h-12 w-12" />
           </Link>
           <Link href="/" className="ml-2 text-xl">
             信带课表
