@@ -21,7 +21,7 @@ const RootLayout = async ({
     <head>
       <meta
         name="viewport"
-        content="minimum-scale=1, initial-scale=1, width=device-width, viewport-fit=cover"
+        content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=0,viewport-fit=cover"
       />
       <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
       <link
@@ -29,7 +29,7 @@ const RootLayout = async ({
         rel="stylesheet"
       />
     </head>
-    <body>
+    <body className="font-sans">
       <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
         <SWRProvider>
           <AppLayout>{children}</AppLayout>
